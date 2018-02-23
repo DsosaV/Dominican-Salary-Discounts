@@ -59,12 +59,16 @@ const float ISR3 = 416220.00f;
 const float EXCEED1 = 79776.00f;
 const float EXCEED2 = 31216.00f;
 
-int main()
+int main(int argc, const char* agrv[])
 {
   // user's monthly salary
   float salary = 0.00f;
-  std::cout << "Introduzca su salario mensual: ";
-  std::cin >> salary;
+  if (argc > 1) {
+    salary = atof(agrv[1]);
+  } else {
+    std::cout << "Introduzca su salario mensual: ";
+    std::cin >> salary;
+  }
 
   // calculate AFP and ARS discounts as well as the annual salary
   float discountAFP = salary * DISCOUNT_AFP;
