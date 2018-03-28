@@ -9,11 +9,11 @@
  *
  * AFP, meaning pension fund discount
  * In Dominican Republic, as of February 2018, pension discount is 2.87% of any
- * given salary and no more than 2.87% of twenty times the minimum salary (RD$4,965.10).
+ * given salary.
  *
  * ARS, meaning health insurance discount.
  * In Dominican Republic, as of February 2018, health insurance discount is 3.04% of
- * any given salary and no more than 3.04% of ten times the minimum salary (RD$2,629.60).
+ * any given salary.
  *
  * ISR, meaning income tax.
  * Income tax in the Dominican Republic, for individual people, is calculated
@@ -42,6 +42,9 @@
  * UPDATED:
  * Updated all values.
  * 2018/02/23 02:02 PM Santo Domingo, Dominican Republic
+ * UPDATED:
+ * Removed AFP max and ARS max values.
+ * 2018/03/28 01:35 PM Santo Domingo, Dominican Republic
  * @author: David Sosa
  */
 #include <iostream>
@@ -61,29 +64,24 @@ const float EXCEED2 = 31216.00f;
 
 int main(int argc, const char* agrv[])
 {
+  using namespace std;
   // user's monthly salary
   float salary = 0.00f;
   if (argc > 1) {
     salary = atof(agrv[1]);
   } else {
-    std::cout << "Introduzca su salario mensual: ";
-    std::cin >> salary;
+    cout << "Introduzca su salario mensual: ";
+    cin >> salary;
+    cout << endl;
   }
 
   // calculate AFP and ARS discounts as well as the annual salary
   float discountAFP = salary * DISCOUNT_AFP;
-  if (discountAFP > DISCOUNT_AFP_MAX) {
-      discountAFP = DISCOUNT_AFP_MAX;
-  }
   float discountARS = salary * DISCOUNT_ARS;
-  if (discountARS > DISCOUNT_ARS_MAX) {
-      discountARS = DISCOUNT_ARS_MAX;
-  }
   float annualSalary = (salary - discountAFP - discountARS) * 12;
 
   // calcualte income tax
   float discountISR = 0.00f;
-
   if (annualSalary > ISR1) {
       discountISR = (EXCEED1 + (annualSalary - ISR1) * 0.25f) / 12;
   } else if (annualSalary > ISR2) {
@@ -93,15 +91,15 @@ int main(int argc, const char* agrv[])
   }
 
   // print results
-  std::cout.precision(2);
-  std::cout << "Descuento AFP: " << std::fixed << discountAFP << std::endl;
-  std::cout << "Descuento ARS: " << std::fixed << discountARS << std::endl;
-  std::cout << "Descuento ISR: " << std::fixed << discountISR << std::endl;
+  cout.precision(2);
+  cout << "Descuento AFP: " << fixed << discountAFP << endl;
+  cout << "Descuento ARS: " << fixed << discountARS << endl;
+  cout << "Descuento ISR: " << fixed << discountISR << endl;
 
   float totalDiscounts = discountAFP + discountARS + discountISR;
 
-  std::cout << "Total Descuentos: " << std::fixed << totalDiscounts << std::endl;
-  std::cout << "Sueldo neto: " << std::fixed << salary - totalDiscounts << std::endl;
+  cout << "Total Descuentos: " << fixed << totalDiscounts << endl;
+  cout << "Sueldo neto: " << fixed << salary - totalDiscounts << endl;
 
   return 0;
 }
